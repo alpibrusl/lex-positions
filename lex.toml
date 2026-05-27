@@ -1,0 +1,8 @@
+[package]
+name    = "lex-positions"
+version = "0.1.0"
+lex     = "0.9.5"
+[dependencies]
+lex-money = { path = "../lex-money" }
+lex-fix   = { path = "../lex-fix" }
+lex-orm   = { path = "../lex-orm" }
