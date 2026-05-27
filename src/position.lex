@@ -79,6 +79,35 @@ fn is_flat(pos :: Position) -> Bool
 
 # ---- String ↔ Decimal helpers (FIX prices arrive as strings) --------
 
+fn char_to_digit(c :: Str) -> Option[Int] {
+  if c == "0" { Some(0) }
+  else { if c == "1" { Some(1) }
+  else { if c == "2" { Some(2) }
+  else { if c == "3" { Some(3) }
+  else { if c == "4" { Some(4) }
+  else { if c == "5" { Some(5) }
+  else { if c == "6" { Some(6) }
+  else { if c == "7" { Some(7) }
+  else { if c == "8" { Some(8) }
+  else { if c == "9" { Some(9) }
+  else { None } } } } } } } } } }
+}
+
+fn parse_digits(s :: Str, pos :: Int, acc :: Int) -> Option[Int] {
+  if pos >= str.len(s) {
+    Some(acc)
+  } else {
+    match char_to_digit(str.slice(s, pos, pos + 1)) {
+      None    => None,
+      Some(digit) => parse_digits(s, pos + 1, acc * 10 + digit),
+    }
+  }
+}
+
+fn parse_uint(s :: Str) -> Option[Int] {
+  if str.is_empty(s) { None } else { parse_digits(s, 0, 0) }
+}
+
 # parse_price "10.05" => Some({ coefficient: 1005, exponent: -2 })
 fn parse_price(s :: Str) -> Option[d.Decimal] {
   let is_neg := str.len(s) > 0 and str.slice(s, 0, 1) == "-"
@@ -88,7 +117,7 @@ fn parse_price(s :: Str) -> Option[d.Decimal] {
     None
   } else {
     if list.len(parts) == 1 {
-      match int.from_str(unsigned) {
+      match parse_uint(unsigned) {
         None    => None,
         Some(n) => Some(if is_neg { d.negate(d.from_int(n)) } else { d.from_int(n) }),
       }
@@ -96,9 +125,9 @@ fn parse_price(s :: Str) -> Option[d.Decimal] {
       let int_s  := match list.head(parts) { None => "0", Some(x) => x }
       let frac_s := match list.head(list.tail(parts)) { None => "0", Some(x) => x }
       let frac_len := str.len(frac_s)
-      match int.from_str(int_s) {
+      match parse_uint(int_s) {
         None      => None,
-        Some(i_n) => match int.from_str(frac_s) {
+        Some(i_n) => match parse_uint(frac_s) {
           None      => None,
           Some(f_n) => {
             let scale := d.pow10(frac_len)

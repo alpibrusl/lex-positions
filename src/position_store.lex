@@ -35,7 +35,7 @@ fn init(db :: conn.ConnDb) -> [positions, sql] Result[Unit, dbe.DbErr] {
   let ddl := "CREATE TABLE IF NOT EXISTS positions (account TEXT NOT NULL, symbol TEXT NOT NULL, qty INTEGER NOT NULL DEFAULT 0, avg_cost_str TEXT NOT NULL DEFAULT '0', realized_pnl_str TEXT NOT NULL DEFAULT '0', PRIMARY KEY (account, symbol))"
   match sql.exec(db.handle, ddl, []) {
     Err(e) => Err(dbe.sql_error(match e.code { None => "", Some(c) => c }, e.message)),
-    Ok(_)  => Ok(unit),
+    Ok(_)  => Ok(()),
   }
 }
 
@@ -72,7 +72,7 @@ fn store(db :: conn.ConnDb, position :: pos.Position) -> [positions, sql] Result
   )
   match sql.exec(db.handle, sq.sql, sq.params) {
     Err(e) => Err(dbe.sql_error(match e.code { None => "", Some(c) => c }, e.message)),
-    Ok(_)  => Ok(unit),
+    Ok(_)  => Ok(()),
   }
 }
 
@@ -101,7 +101,7 @@ fn remove(db :: conn.ConnDb, key :: pos.PositionKey) -> [positions, sql] Result[
   )
   match sql.exec(db.handle, sq.sql, sq.params) {
     Err(e) => Err(dbe.sql_error(match e.code { None => "", Some(c) => c }, e.message)),
-    Ok(_)  => Ok(unit),
+    Ok(_)  => Ok(()),
   }
 }
 
