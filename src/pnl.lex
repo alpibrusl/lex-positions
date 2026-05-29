@@ -13,12 +13,7 @@ import "./position" as pos
 
 fn unrealized_pnl(position :: pos.Position, mark_price :: d.Decimal) -> d.Decimal
   examples {
-    unrealized_pnl(
-      { key: { account: "A", symbol: "X" }, qty: 100,
-        avg_cost: { coefficient: 1000, exponent: -2 },
-        realized_pnl: { coefficient: 0, exponent: 0 } },
-      { coefficient: 1050, exponent: -2 }
-    ) => { coefficient: 5000, exponent: -2 },
+    unrealized_pnl({ key: { account: "A", symbol: "X" }, qty: 100, avg_cost: { coefficient: 1000, exponent: -2 }, realized_pnl: { coefficient: 0, exponent: 0 } }, { coefficient: 1050, exponent: -2 }) => { coefficient: 5000, exponent: -2 }
   }
 {
   if pos.is_flat(position) {
@@ -39,5 +34,10 @@ fn total_pnl(position :: pos.Position, mark_price :: d.Decimal) -> d.Decimal {
 }
 
 fn pos_abs_qty(position :: pos.Position) -> Int {
-  if position.qty < 0 { 0 - position.qty } else { position.qty }
+  if position.qty < 0 {
+    0 - position.qty
+  } else {
+    position.qty
+  }
 }
+

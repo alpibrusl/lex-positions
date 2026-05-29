@@ -12,15 +12,14 @@ import "./position" as pos
 
 fn gross_notional(position :: pos.Position, mark_price :: d.Decimal) -> d.Decimal
   examples {
-    gross_notional(
-      { key: { account: "A", symbol: "X" }, qty: 0 - 50,
-        avg_cost: { coefficient: 0, exponent: 0 },
-        realized_pnl: { coefficient: 0, exponent: 0 } },
-      { coefficient: 2000, exponent: -2 }
-    ) => { coefficient: 100000, exponent: -2 },
+    gross_notional({ key: { account: "A", symbol: "X" }, qty: 0 - 50, avg_cost: { coefficient: 0, exponent: 0 }, realized_pnl: { coefficient: 0, exponent: 0 } }, { coefficient: 2000, exponent: -2 }) => { coefficient: 100000, exponent: -2 }
   }
 {
-  let abs_qty := if position.qty < 0 { 0 - position.qty } else { position.qty }
+  let abs_qty := if position.qty < 0 {
+    0 - position.qty
+  } else {
+    position.qty
+  }
   d.mul(d.from_int(abs_qty), mark_price)
 }
 
@@ -32,3 +31,4 @@ fn within_notional(position :: pos.Position, mark_price :: d.Decimal, limit :: d
 fn net_exposure(position :: pos.Position, mark_price :: d.Decimal) -> d.Decimal {
   d.mul(d.from_int(position.qty), mark_price)
 }
+
