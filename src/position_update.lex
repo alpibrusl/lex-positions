@@ -47,7 +47,7 @@ fn abs_qty(n :: Int) -> Int {
 
 fn waac(old_qty :: Int, old_avg :: d.Decimal, fill_qty :: Int, fill_price :: d.Decimal, new_abs_qty :: Int) -> d.Decimal {
   let numer := d.add(d.mul(d.from_int(old_qty), old_avg), d.mul(d.from_int(fill_qty), fill_price))
-  let rounded := r.round_to(numer, -8, HalfEven(()))
+  let rounded := r.round_to(numer, -8, HalfEven)
   { coefficient: rounded.coefficient / new_abs_qty, exponent: -8 }
 }
 
