@@ -1,5 +1,9 @@
 # lex-positions
 
+[![CI](https://github.com/alpibrusl/lex-positions/actions/workflows/ci.yml/badge.svg)](https://github.com/alpibrusl/lex-positions/actions/workflows/ci.yml)
+
+**Part of the [Lex](https://lexlang.org) project** — Finance · [Manifesto](https://lexlang.org/manifesto) · [All packages](https://lexlang.org)
+
 WAAC position book with realized PnL for Lex.
 
 Tracks signed positions (positive = long, negative = short) per account/symbol pair. Every fill updates the weighted average acquisition cost using exact `Decimal` arithmetic from `lex-money`. Positions are persisted via `lex-orm` (SQLite or PostgreSQL).
