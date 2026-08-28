@@ -71,3 +71,9 @@ Every fill that flows through `lex-oms` updates positions here. `lex-risk` reads
 [dependencies]
 "lex-positions" = { git = "https://github.com/alpibrusl/lex-positions" }
 ```
+
+## License
+
+Copyright (c) 2026 lex-positions contributors.
+
+Licensed under the [EUPL-1.2](LICENSE) — the European Union Public Licence, as used across the `lex-*` ecosystem.
